@@ -116,6 +116,17 @@ public class BookIssueService {
 			return returnObj;
 	}
 
+	public BookIssueVO getReturnByAccessno(String accessno) {
+		BookIssueVO returnObj = new BookIssueVO();
+		try {
+			List<Map<String, Object>> biData = bookIssueDao.getReturnByAccessno(accessno);
+			returnObj.setDataList(biData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return returnObj;
+	}
+
 	public BookIssueVO booklentdatewise(String issuestartDate, String issueendDate) {
 		BookIssueVO returnobj=new BookIssueVO();
 		//System.out.println("issuestartDate--"+issuestartDate);

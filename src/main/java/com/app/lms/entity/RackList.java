@@ -2,7 +2,7 @@ package com.app.lms.entity;
 
 import java.sql.Date;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.Data;
 

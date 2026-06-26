@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.app.lms.Util.ResourceNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,10 +27,12 @@ import com.app.lms.service.BookService;
 
 @RestController
 public class BookController {
-	
+
+		private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
 		@Autowired
 	    private BookService bookService;
-	    
+
 	    @Autowired
 	    private BookDao bookDao;
 	    
@@ -67,6 +71,7 @@ public class BookController {
 				Book newBook = bookService.createBook(book);
 				return new ResponseEntity<>(newBook, HttpStatus.CREATED);
 			} catch (Exception e) {
+				log.error("Failed to create book", e);
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -91,6 +96,7 @@ public class BookController {
 				bookDao.deleteById(id);
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			} catch (Exception e) {
+				log.error("Failed to delete book id={}", id, e);
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -101,6 +107,7 @@ public class BookController {
 				BookIssueVO newBook = bookService.bookIssue(bookVO);
 				return new ResponseEntity<>(newBook, HttpStatus.CREATED);
 			} catch (Exception e) {
+				log.error("Failed to issue book(s)", e);
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -132,6 +139,7 @@ public class BookController {
 			BookIssueVO newBook = bookService.generateBarCodesForAllBooks();
 			return new ResponseEntity<>(newBook, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Failed to generate barcodes for all books", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -149,6 +157,7 @@ public class BookController {
 			BookIssueVO newBook = bookService.getAllRackList();
 			return new ResponseEntity<>(newBook, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error("Failed to load rack list", e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
@@ -171,6 +180,7 @@ public class BookController {
 				RackList newRack = bookService.saveRack(rack);
 				return new ResponseEntity<>(newRack, HttpStatus.CREATED);
 			} catch (Exception e) {
+				log.error("Failed to save rack", e);
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -181,6 +191,7 @@ public class BookController {
 				BookIssueVO newRack = bookService.getAllRackListwithBookCount();
 				return new ResponseEntity<>(newRack, HttpStatus.OK);
 			} catch (Exception e) {
+				log.error("Failed to load rack list with book count", e);
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 	    }

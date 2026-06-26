@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
